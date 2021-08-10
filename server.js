@@ -76,6 +76,7 @@ function initialQuestions() {
                     break;
 
                 case "End":
+                    console.log ("BYE BYE! :)")
                     connection.end();
                     break;
             }
@@ -278,7 +279,7 @@ function updateRole() {
             inquirer.prompt({
                     type: "input",
                     name: "roleID",
-                    message: "Enter the role ID you want the user to have",
+                    message: "Enter the role ID you want the person to have",
                 })
                 .then((answer) => {
                     connection.query(
