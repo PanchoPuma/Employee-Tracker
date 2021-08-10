@@ -82,3 +82,12 @@ function firstPrompt() {
             }
         });
 }
+
+// functions 
+viewAllDepartments();
+viewAllRoles();
+viewAllEmployees();
+addDepartment();
+addRole();
+addEmployee();
+updateRole();
