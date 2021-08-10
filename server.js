@@ -15,14 +15,14 @@ connection.connect(function (err) {
     console.log(`
     ________________________________________________________
 
-    ╔═══╗     ╔╗                ╔═╗╔═╗
-    ║╔══╝     ║║                ║║╚╝║║
-    ║╚══╦╗╔╦══╣║╔══╦╗─╔╦══╦══╗  ║╔╗╔╗╠══╦═╗╔══╦══╦══╦═╗
-    ║╔══╣╚╝║╔╗║║║╔╗║║─║║║═╣║═╣  ║║║║║║╔╗║╔╗╣╔╗║╔╗║║═╣╔╝
-    ║╚══╣║║║╚╝║╚╣╚╝║╚═╝║║═╣║═╣  ║║║║║║╔╗║║║║╔╗║╚╝║║═╣║
-    ╚═══╩╩╩╣╔═╩═╩══╩═╗╔╩══╩══╝  ╚╝╚╝╚╩╝╚╩╝╚╩╝╚╩═╗╠══╩╝
-           ║║      ╔═╝║                       ╔═╝║
-           ╚╝      ╚══╝                       ╚══╝
+    ╔═══╗       ╔╗                 ╔═╗╔═╗
+    ║╔══╝       ║║                 ║ ╚╝ ║
+    ║╚══╦═╗╔═╦══╣║ ╔══╦╗ ╔╦══╦══╗  ║╔╗╔╗╠══╦═╗╔══╦══╦══╦═╗
+    ║╔══╣ ╚╝ ║╔╗║║ ║╔╗║║ ║║║═╣║═╣  ║║║║║║╔╗║╔╗╣╔╗║╔╗║║═╣╔╝
+    ║╚══╣ ║║ ║╚╝║╚═╣╚╝║╚═╝║║═╣║═╣  ║║║║║║╔╗║║║║╔╗║╚╝║║═╣║
+    ╚═══╩═╩╩═╣╔═╩══╩══╩═╗╔╩══╩══╝  ╚╝╚╝╚╩╝╚╩╝╚╩╝╚╩═╗╠══╩╝
+             ║║       ╔═╝║                       ╔═╝║
+             ╚╝       ╚══╝                       ╚══╝
 
     ________________________________________________________`)
 
@@ -32,19 +32,19 @@ connection.connect(function (err) {
 function initialQuestions() {
 
     inquirer.prompt({
-            type: "list",
-            name: "Options",
-            message: "What would you like to do?",
-            choices: [
-                "View All Departments",
-                "View All Roles",
-                "View All Employees",
-                "Add a Department",
-                "Add a Role",
-                "Add an Employee",
-                "Update a Role",
-                "End"]
-        })
+        type: "list",
+        name: "Options",
+        message: "What would you like to do?",
+        choices: [
+            "View All Departments",
+            "View All Roles",
+            "View All Employees",
+            "Add a Department",
+            "Add a Role",
+            "Add an Employee",
+            "Update a Role",
+            "End"]
+    })
         .then(function ({ Options }) {
             switch (Options) {
                 case "View All Departments":
@@ -145,10 +145,10 @@ function viewAllEmployees() {
 //addDepartment();
 function addDepartment() {
     inquirer.prompt({
-            name: "department_name",
-            type: "input",
-            message: "What is the department name?",
-        })
+        name: "department_name",
+        type: "input",
+        message: "What is the department name?",
+    })
         .then((answer) => {
             console.log("Adding a new department");
             connection.query(
@@ -167,8 +167,137 @@ function addDepartment() {
 }
 
 
-addRole();
+//addRole();
+function addRole() {
+    connection.query('SELECT * FROM department', function (err, res) {
+        if (err) throw err;
+        inquirer.prompt([
+            {
+                name: 'new_role',
+                type: 'input',
+                message: "What new role would you like to add?"
+            },
+            {
+                name: 'salary',
+                type: 'input',
+                message: 'What is the salary of this role?'
+            },
+            {
+                name: 'Department',
+                type: 'list',
+                choices: function () {
+                    let deptArray = [];
+                    for (let i = 0; i < res.length; i++) {
+                        deptArray.push(res[i].name);
+                    }
+                    return deptArray;
+                },
+            }
+        ]).then(function (answer) {
+            let department_id;
+            for (let a = 0; a < res.length; a++) {
+                if (res[a].name == answer.Department) {
+                    department_id = res[a].id;
+                }
+            }
 
-addEmployee();
+            connection.query(
+                'INSERT INTO role SET ?',
+                {
+                    title: answer.new_role,
+                    salary: answer.salary,
+                    department_id: department_id
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log('Result Generated');
+                    console.table(res);
+                    initialQuestions();
+                })
+        })
+    })
+};
 
-updateRole();
+
+//addEmployee();
+function addEmployee() {
+    inquirer.prompt([
+            {
+                type: "input",
+                name: "firstName",
+                message: "What is the employee's first name?",
+            },
+            {
+                type: "input",
+                name: "lastName",
+                message: "What is the employee's last name?",
+            },
+            {
+                type: "input",
+                name: "roleId",
+                message: "What is this employee's role ID?",
+            },
+            {
+                type: "input",
+                name: "managerId",
+                message: "What is this employee's manager ID?",
+            },
+        ])
+        .then((answer) => {
+            console.log("Adding a new employee");
+            connection.query(
+                `INSERT INTO employee SET ?`,
+                {
+                    first_name: answer.firstName,
+                    last_name: answer.lastName,
+                    role_id: answer.roleId,
+                    manager_id: answer.managerId,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log('Result Generated');
+                    console.table(res);
+                    initialQuestions();
+                }
+            );
+        });
+}
+
+//updateRole();
+function updateRole() {
+    let employeeID = '';
+
+    inquirer.prompt({
+            name: "employeeID",
+            type: "input",
+            message: "Enter the EEID of the person you want to update",
+        })
+        .then((answer) => {
+            employeeID = answer.employeeID;
+
+            inquirer.prompt({
+                    type: "input",
+                    name: "roleID",
+                    message: "Enter the role ID you want the user to have",
+                })
+                .then((answer) => {
+                    connection.query(
+                        "UPDATE employee SET ? WHERE ?",
+                        [
+                            {
+                                role_id: answer.roleID,
+                            },
+                            {
+                                id: employeeID,
+                            },
+                        ],
+                        function (err, res) {
+                            if (err) throw err;
+                    console.log('Result Generated');
+                    console.table(res);
+                    initialQuestions();
+                        }
+                    );
+                });
+        });
+}
