@@ -233,6 +233,21 @@ function addEmployee() {
                 name: "lastName",
                 message: "What is the employee's last name?",
             },
+            // {
+            //     type: "input",
+            //     name: "role",
+            //     message: "What is the employee's title/role?",
+            // },
+            // {
+            //     type: "input",
+            //     name: "department",
+            //     message: "What is the employee's department?",
+            // },
+            // {
+            //     type: "input",
+            //     name: "salary",
+            //     message: "What is the employee's salary?",
+            // },
             {
                 type: "input",
                 name: "roleId",
@@ -251,6 +266,9 @@ function addEmployee() {
                 {
                     first_name: answer.firstName,
                     last_name: answer.lastName,
+                    //role: answer.role,
+                    // department: answer.department,
+                    // salary: answer.salary,
                     role_id: answer.roleId,
                     manager_id: answer.managerId,
                 },
