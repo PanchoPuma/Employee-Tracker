@@ -103,7 +103,7 @@ function viewAllDepartments() {
 
 function viewAllRoles() {
     //let query = `SELECT * FROM Role`;
-    let query = `SELECT role.title, employee.id, employee.first_name, employee.last_name, department.name AS department
+    let query = `SELECT employee.id, employee.first_name, role.title, role.salary, employee.last_name, department.name AS department
     FROM employee
     LEFT JOIN role ON (role.id = employee.role_id)
     LEFT JOIN department ON (department.id = role.department_id)`;
