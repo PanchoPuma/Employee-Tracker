@@ -31,10 +31,9 @@ connection.connect(function (err) {
 
 function initialQuestions() {
 
-    inquirer
-        .prompt({
+    inquirer.prompt({
             type: "list",
-            name: "Initial Options",
+            name: "Options",
             message: "What would you like to do?",
             choices: [
                 "View All Departments",
@@ -46,8 +45,8 @@ function initialQuestions() {
                 "Update a Role",
                 "End"]
         })
-        .then(function ({ task }) {
-            switch (task) {
+        .then(function ({ Options }) {
+            switch (Options) {
                 case "View All Departments":
                     viewAllDepartments();
                     break;
@@ -143,7 +142,30 @@ function viewAllEmployees() {
 
 }
 
-addDepartment();
+//addDepartment();
+function addDepartment() {
+    inquirer.prompt({
+            name: "department_name",
+            type: "input",
+            message: "What is the department name?",
+        })
+        .then((answer) => {
+            console.log("Adding a new department");
+            connection.query(
+                `INSERT INTO department SET ?`,
+                {
+                    department_name: answer.department_name,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log("Result generated");
+                    console.table(res);
+                    initialQuestions();
+                }
+            );
+        });
+}
+
 
 addRole();
 
