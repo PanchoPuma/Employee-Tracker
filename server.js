@@ -87,10 +87,8 @@ function initialQuestions() {
 
 //viewAllDepartments();
 function viewAllDepartments() {
-    let query = `SELECT department.name AS department, role.title, employee.id, employee.first_name, employee.last_name
-        FROM employee
-        LEFT JOIN role ON (role.id = employee.role_id)
-        LEFT JOIN department ON (department.id = role.department_id)`;
+
+    let query = `SELECT * FROM department`;
     connection.query(query, function (err, res) {
         if (err) throw err;
 
@@ -104,11 +102,7 @@ function viewAllDepartments() {
 //viewAllRoles();
 
 function viewAllRoles() {
-    const query = `SELECT role.title, employee.id, employee.first_name, employee.last_name, department.name AS department
-    FROM employee
-    LEFT JOIN role ON (role.id = employee.role_id)
-    LEFT JOIN department ON (department.id = role.department_id)`;
-
+    let query = `SELECT * FROM Role`;
 
     connection.query(query, function (err, res) {
         if (err) throw err;
@@ -155,7 +149,7 @@ function addDepartment() {
             connection.query(
                 `INSERT INTO department SET ?`,
                 {
-                    department_name: answer.department_name,
+                    name: answer.department_name,
                 },
                 function (err, res) {
                     if (err) throw err;
@@ -240,8 +234,8 @@ function addEmployee() {
             // },
             // {
             //     type: "input",
-            //     name: "department",
-            //     message: "What is the employee's department?",
+            //     name: "department_id",
+            //     message: "What is the employee's department_id?",
             // },
             // {
             //     type: "input",
@@ -267,7 +261,7 @@ function addEmployee() {
                     first_name: answer.firstName,
                     last_name: answer.lastName,
                     //role: answer.role,
-                    // department: answer.department,
+                    // name: answer.department_id,
                     // salary: answer.salary,
                     role_id: answer.roleId,
                     manager_id: answer.managerId,
