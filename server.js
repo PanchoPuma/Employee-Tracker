@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const Ctable = require("console.table");
+require("console.table");
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -9,3 +9,4 @@ const connection = mysql.createConnection({
     password: 'PanchoPuma12!',
     database: 'employeesDB'
 });
+
