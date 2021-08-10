@@ -1,0 +1,19 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "This is command-line application used to manage a company's employee database",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PanchoPuma/Employee-Tracker.git"
+  },
+  "author": "Francisco Puma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PanchoPuma/Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/PanchoPuma/Employee-Tracker#readme"
+}
