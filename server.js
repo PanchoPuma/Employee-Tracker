@@ -1,6 +1,6 @@
-const mysql = require("mysql");
-const inquirer = require("inquirer");
-require("console.table");
+const mysql = require('mysql');
+const inquirer = require('inquirer');
+const consoleTable = require('console.table');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -26,10 +26,10 @@ connection.connect(function (err) {
 
     ________________________________________________________`)
 
-    firstPrompt();
+    initialQuestions();
 });
 
-function firstPrompt() {
+function initialQuestions() {
 
     inquirer
         .prompt({
@@ -84,10 +84,69 @@ function firstPrompt() {
 }
 
 // functions 
-viewAllDepartments();
-viewAllRoles();
-viewAllEmployees();
+
+//viewAllDepartments();
+function viewAllDepartments() {
+    let query = `SELECT department.name AS department, role.title, employee.id, employee.first_name, employee.last_name
+        FROM employee
+        LEFT JOIN role ON (role.id = employee.role_id)
+        LEFT JOIN department ON (department.id = role.department_id)`;
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+
+        console.table(res);
+        console.log("Result generated");
+
+        initialQuestions();
+    });
+}
+
+//viewAllRoles();
+
+function viewAllRoles() {
+    const query = `SELECT role.title, employee.id, employee.first_name, employee.last_name, department.name AS department
+    FROM employee
+    LEFT JOIN role ON (role.id = employee.role_id)
+    LEFT JOIN department ON (department.id = role.department_id)`;
+
+
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+
+        console.table(res);
+        console.log("Result generated");
+
+        initialQuestions();
+    });
+
+}
+
+//viewAllEmployees();
+function viewAllEmployees() {
+    console.log("Viewing All Employees");
+
+    let query =
+        `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager
+        FROM employee
+    LEFT JOIN role ON (employee.role_id = role.id)
+    LEFT JOIN department ON (department.id = role.department_id)
+    LEFT JOIN employee manager ON (manager.id = employee.manager_id);`
+
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+
+        console.table(res);
+        console.log("Result generated");
+
+        initialQuestions();
+    });
+
+}
+
 addDepartment();
+
 addRole();
+
 addEmployee();
+
 updateRole();
