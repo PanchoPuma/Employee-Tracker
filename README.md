@@ -12,5 +12,7 @@ To access this app, you need to donwload it, install it on your computer alongsi
 ![ScreenShot](/assets/images/Sample1.jpeg)
 ![ScreenShot](/assets/images/Sample2.jpeg)
 ![ScreenShot](/assets/images/Sample3.jpeg)
+![ScreenShot](/assets/images/Sample4.jpeg)
+![ScreenShot](/assets/images/Sample5.jpeg)
 
 Video: https:/

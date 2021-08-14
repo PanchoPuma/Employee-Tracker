@@ -231,21 +231,6 @@ function addEmployee() {
             name: "lastName",
             message: "What is the employee's last name?",
         },
-        // {
-        //     type: "input",
-        //     name: "role",
-        //     message: "What is the employee's title/role?",
-        // },
-        // {
-        //     type: "input",
-        //     name: "department_id",
-        //     message: "What is the employee's department_id?",
-        // },
-        // {
-        //     type: "input",
-        //     name: "salary",
-        //     message: "What is the employee's salary?",
-        // },
         {
             type: "input",
             name: "roleId",
