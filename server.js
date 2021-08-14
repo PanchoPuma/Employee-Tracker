@@ -51,24 +51,24 @@ function initialQuestions() {
                     viewAllDepartments();
                     break;
 
-                case "View All Roles":
-                    viewAllRoles();
-                    break;
-
                 case "View All Employees":
                     viewAllEmployees();
+                    break;
+
+                case "View All Roles":
+                    viewAllRoles();
                     break;
 
                 case "Add a Department":
                     addDepartment();
                     break;
 
-                case "Add a Role":
-                    addRole();
-                    break;
-
                 case "Add an Employee":
                     addEmployee();
+                    break;
+
+                case "Add a Role":
+                    addRole();
                     break;
 
                 case "Update a Role":
@@ -104,7 +104,7 @@ function viewAllDepartments() {
 function viewAllRoles() {
     //let query = `SELECT * FROM Role`;
     //employee.first_name, employee.last_name,
-    let query = `SELECT employee.id, role.title, department.name AS department, role.salary, employee.first_name, employee.last_name,
+    let query = `SELECT employee.id, role.title, department.name AS department, role.salary
     FROM employee
     LEFT JOIN role ON (role.id = employee.role_id)
     LEFT JOIN department ON (department.id = role.department_id)`;
