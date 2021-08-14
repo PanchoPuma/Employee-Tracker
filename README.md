@@ -15,4 +15,4 @@ To access this app, you need to donwload it, install it on your computer alongsi
 ![ScreenShot](/assets/images/Sample4.jpeg)
 ![ScreenShot](/assets/images/Sample5.jpeg)
 
-Video: https:/
+Video: https://drive.google.com/file/d/1Rpr7V2f5arGQPgo7ex00qNYVuDNqSV-5/view?usp=sharing 
